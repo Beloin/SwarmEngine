@@ -13,10 +13,9 @@
 
 char fps;
 float offset = 0.1f;
-struct timespec start, end;
-clock_t start_, step_; // start and step are in seconds.
+double start_, step_; // start and step are in seconds.
 
-PhysicsContext context = (PhysicsContext) {0, S};
+PhysicsContext context = (PhysicsContext) {0, MS_500};
 
 void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
 }
@@ -40,9 +39,7 @@ int main() {
     glClearColor(0.07f, 0.13f, 0.17f, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    step_ = start_ = clock();
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    step_ = start_ = glfwGetTime();
 
     float vectorVertex[9];
 
@@ -68,19 +65,20 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         fps++;
 
-        step_ = clock();
-        double currentTime = (double) step_ / CLOCKS_PER_SEC;
-
+        step_ = glfwGetTime();
+        double currentTime = step_;
         context.dt = currentTime;
 
-        double seconds = (double) (step_ - start_) / CLOCKS_PER_SEC;
+        double seconds = (double) (step_ - start_);
 
+        // TODO: Something here is weird
         if (seconds >= 1) {
             printf("FPS: %d\n", fps);
-            start_ = clock();
+            start_ = glfwGetTime();
             fps = 0;
         }
 
+        // TODO: Something here is weird
         checkSimulation(seconds);
 
         glClear(GL_COLOR_BUFFER_BIT);
@@ -97,8 +95,6 @@ int main() {
 
         glfwSwapBuffers(window);
         glfwPollEvents();
-
-        clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     }
 
     return 0;
@@ -122,7 +118,6 @@ void checkSimulation(double seconds) {
 
 GLFWwindow *setup() {
     glfwInit();
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
