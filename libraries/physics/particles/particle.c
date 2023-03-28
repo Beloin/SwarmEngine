@@ -3,10 +3,10 @@
 
 
 Vector2 ComputeGravityForce(Particle *particle) {
-    return (Vector2) {0, particle->mass * GRAVITY};
+    return (Vector2) {0, -particle->mass * GRAVITY};
 }
 
-void CalculateNewPosition(Particle *particle, Vector2 *acceleration, const PhysicsContext *const context) {
+void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration, const PhysicsContext *context) {
     Vector2 *velocity = &particle->velocity;
     float dt = (float) context->dt;
 

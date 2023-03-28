@@ -18,6 +18,6 @@ typedef struct {
 
 Vector2 ComputeGravityForce(Particle *particle);
 
-void CalculateNewPosition(Particle *particle, Vector2 *acceleration, const PhysicsContext *context);
+void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration, const PhysicsContext *context);
 
 #endif //INC_2D_PHYSICS_PARTICLE_H

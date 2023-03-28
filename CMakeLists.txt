@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 add_executable(swarm_engine main.c)
 
 
-target_include_directories(swarm_engine PRIVATE src/)
+target_include_directories(swarm_engine PRIVATE src/particle_adapter)
 
 add_library(physics_lib STATIC
         libraries/physics/vector/vector2.c

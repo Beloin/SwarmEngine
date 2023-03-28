@@ -10,7 +10,7 @@ typedef enum {
 } Resolution;
 
 typedef struct {
-    long dt; // Simulation Time in seconds
+    long double dt; // Simulation Time in seconds
     Resolution resolution;
 } PhysicsContext;
 
