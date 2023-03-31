@@ -17,3 +17,12 @@ void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration, 
     position->x = position->x + velocity->x * dt;
     position->y = position->y + velocity->y * dt;
 }
+
+void CalculateNewPosition(Particle *particle, const PhysicsContext *context) {
+    float dt = (float) context->dt;
+
+    Vector2 *velocity = &particle->velocity;
+    Vector2 *position = &particle->position;
+    position->x = position->x + velocity->x * dt;
+    position->y = position->y + velocity->y * dt;
+}

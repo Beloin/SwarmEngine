@@ -3,7 +3,6 @@
 //
 
 #include "gl_particle_adapter.h"
-#include "../../include/physics/vector2.h"
 #include <math.h>
 
 const float h = ((float) 3 / 2) * DEFAULT_CENTER_DIST;

@@ -21,7 +21,7 @@ add_library(src_lib STATIC
 target_include_directories(src_lib PUBLIC src/)
 target_link_libraries(swarm_engine PUBLIC src_lib)
 
-add_library(glad_lib STATIC libraries/glad.c include/physics/physicsContext.h src/particle_adapter/gl_particle_adapter.c src/particle_adapter/gl_particle_adapter.h)
+add_library(glad_lib STATIC libraries/glad.c include/physics/physicsContext.h src/particle_adapter/gl_particle_adapter.c src/particle_adapter/gl_particle_adapter.h src/simulation/simulation.c src/simulation/simulation.h)
 target_include_directories(glad_lib PUBLIC include/glad/)
 target_link_libraries(swarm_engine PRIVATE glad_lib)
 

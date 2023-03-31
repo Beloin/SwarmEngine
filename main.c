@@ -4,8 +4,8 @@
 #include "vector2.h"
 #include "gl_particle_adapter.h"
 #include "particle.h"
+#include "simulation/simulation.h"
 #include <GLFW/glfw3.h>
-#include <time.h>
 #include <stdlib.h>
 
 #define HEIGHT 800
@@ -15,9 +15,32 @@ char fps;
 float offset = 0.1f;
 double start_, step_; // start and step are in seconds.
 
-PhysicsContext context = (PhysicsContext) {0, MS_500};
+PhysicsContext context = (PhysicsContext) {0};
+
+Vector2 currentXlr8 = (Vector2) {0.0f, 0.0f};
+
+Vector2 xlr8 = (Vector2) {0.1f, 0.0f};
+Vector2 friction = (Vector2) {-0.1f, 0.0f};
+
+double reset = 0;
 
 void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    if (action == GLFW_RELEASE) {
+//    if (action == GLFW_PRESS) {
+        if (key == GLFW_KEY_RIGHT) {
+            reset = step_;
+            currentXlr8.x = xlr8.x;
+            currentXlr8.y = xlr8.y;
+        } else if (key == GLFW_KEY_LEFT) {
+            reset = step_;
+            currentXlr8.x = friction.x;
+            currentXlr8.y = friction.y;
+        } else if (key == GLFW_KEY_DOWN) {
+            reset = step_;
+            currentXlr8.x = 0;
+            currentXlr8.y = 0;
+        }
+    }
 }
 
 
@@ -25,14 +48,13 @@ GLFWwindow *setup();
 
 GLuint genShaderProgram01();
 
-void doSimulate();
+void doSimulate(Particle *p);
 
-void checkSimulation(double seconds);
 
-Particle particle;
-
+//Particle particle;
 
 int main() {
+    srand(1);
     GLFWwindow *window = setup();
     gladLoadGL();
     glViewport(0, 0, HEIGHT, WIDTH);
@@ -57,63 +79,54 @@ int main() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vectorVertex), vectorVertex, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, NULL);
 
-    Vector2 position = CreateVector(200, 400);
-    Vector2 velocity = CreateVector(0, 0);
-    particle = (Particle) {position, velocity, 1};
+//    Vector2 position = CreateVector(200, 400);
+//    Vector2 velocity = CreateVector(0, 0);
+//    particle = (Particle) {position, velocity, 1};
 
+
+    Initialize(0, HEIGHT);
     GLuint shaderProgram01 = genShaderProgram01();
+    double currentTime, seconds;
     while (!glfwWindowShouldClose(window)) {
         fps++;
 
         step_ = glfwGetTime();
-        double currentTime = step_;
+        currentTime = step_ - reset;
         context.dt = currentTime;
 
-        double seconds = (double) (step_ - start_);
+        seconds = (double) (step_ - start_);
 
-        // TODO: Something here is weird
         if (seconds >= 1) {
-            printf("FPS: %d\n", fps);
+            printf("FPS: %d | ", fps);
+            printf("Context Time: %.2f\n", context.dt);
             start_ = glfwGetTime();
             fps = 0;
         }
-
-        // TODO: Something here is weird
-        checkSimulation(seconds);
 
         glClear(GL_COLOR_BUFFER_BIT);
         glEnableVertexAttribArray(0);
 
         glUseProgram(shaderProgram01);
 
-        TriangleVector2 tv2 = CreateTriangle(&particle.position, HEIGHT, WIDTH);
-        GenerateFloatArray(&tv2, vectorVertex);
+        Particle *ptr = GetParticleArray();
+        for (int i = 0; i < GetParticlesLength(); ++i) {
+            Particle *particle = ptr + i;
+            doSimulate(particle);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        // Update buffer data.
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
+            TriangleVector2 tv2 = CreateTriangle(&particle->position, HEIGHT, WIDTH);
+            GenerateFloatArray(&tv2, vectorVertex);
+
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+            // Update buffer data.
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
+        }
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     return 0;
-}
-
-void checkSimulation(double seconds) {
-    if (context.resolution == S) {
-        if (seconds + offset >= 1) {
-            doSimulate();
-        }
-    } else if (context.resolution == MS_500) {
-        if (seconds >= 0.5) {
-            doSimulate();
-        }
-    } else if (context.resolution == MS_100) {
-        if (seconds >= 0.1) {
-            doSimulate();
-        }
-    }
 }
 
 GLFWwindow *setup() {
@@ -166,7 +179,9 @@ GLuint genShaderProgram01() {
     return shaderProgram;
 }
 
-void doSimulate() {
-    Vector2 acceleration = ComputeGravityForce(&particle);
-    CalculateNewPositionAndVelocity(&particle, &acceleration, &context);
+void doSimulate(Particle *p) {
+//    Vector2 acceleration = ComputeGravityForce(p);
+    CalculateNewPositionAndVelocity(p, &currentXlr8, &context);
+
+//    CalculateNewPosition(p, &context);
 }
