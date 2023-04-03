@@ -10,7 +10,8 @@ typedef struct {
     float y;
 } Vector2;
 
-void Negate(Vector2*);
+void Negate(Vector2 *);
+
 Vector2 CreateVector(float x, float y);
 
 

@@ -7,7 +7,6 @@
 
 #include "../../include/physics/vector2.h"
 
-#define DEFAULT_CENTER_DIST 50.0f
 
 // For now everyone will be an equilateral triangle.
 typedef struct {

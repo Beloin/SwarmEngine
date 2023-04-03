@@ -6,7 +6,8 @@
 #define SWARM_ENGINE_PHYSICSCONTEXT_H
 
 typedef struct {
-    double dt; // Simulation Time in seconds
+    double t; // Simulation Time in seconds
+    double reset;
 } PhysicsContext;
 
 #endif //SWARM_ENGINE_PHYSICSCONTEXT_H

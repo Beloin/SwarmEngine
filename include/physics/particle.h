@@ -14,11 +14,15 @@ typedef struct {
     Vector2 position;
     Vector2 velocity;
     float mass;
+    double dt; // TODO: Here we have 4 padding bytes, since we have 8 padded byes
 } Particle;
 
 Vector2 ComputeGravityForce(Particle *particle);
 
 void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration, const PhysicsContext *context);
+
 void CalculateNewPosition(Particle *particle, const PhysicsContext *context);
+
+Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target, PhysicsContext *ptr);
 
 #endif //INC_2D_PHYSICS_PARTICLE_H

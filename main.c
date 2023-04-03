@@ -11,6 +11,7 @@
 #define HEIGHT 800
 #define WIDTH 800
 
+
 char fps;
 float offset = 0.1f;
 double start_, step_; // start and step are in seconds.
@@ -51,7 +52,9 @@ GLuint genShaderProgram01();
 void doSimulate(Particle *p);
 
 
-//Particle particle;
+Vector2 target = (Vector2) {700, 100};
+
+void randomizeTarget();
 
 int main() {
     srand(1);
@@ -84,23 +87,33 @@ int main() {
 //    particle = (Particle) {position, velocity, 1};
 
 
-    Initialize(0, HEIGHT);
+    InitializeSimulation(0, HEIGHT);
+
     GLuint shaderProgram01 = genShaderProgram01();
-    double currentTime, seconds;
+
+    double currentTime, seconds, ite;
+    currentTime = seconds = ite = 0;
     while (!glfwWindowShouldClose(window)) {
         fps++;
 
         step_ = glfwGetTime();
         currentTime = step_ - reset;
-        context.dt = currentTime;
+        context.t = currentTime;
 
         seconds = (double) (step_ - start_);
 
         if (seconds >= 1) {
             printf("FPS: %d | ", fps);
-            printf("Context Time: %.2f\n", context.dt);
+            printf("Context Time: %.2f\n", context.t);
             start_ = glfwGetTime();
             fps = 0;
+
+            ite++;
+        }
+
+        if (ite >= 2) {
+            randomizeTarget();
+            ite = 0;
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
@@ -108,12 +121,23 @@ int main() {
 
         glUseProgram(shaderProgram01);
 
-        Particle *ptr = GetParticleArray();
-        for (int i = 0; i < GetParticlesLength(); ++i) {
-            Particle *particle = ptr + i;
-            doSimulate(particle);
+        Ant *ptr = GetSimulationArray();
+        for (int i = 0; i < GetSimulationLength(); ++i) {
+            Ant *ant = ptr + i;
 
-            TriangleVector2 tv2 = CreateTriangle(&particle->position, HEIGHT, WIDTH);
+            ant->bodyCenter.dt += seconds;
+
+            doSimulate(&ant->bodyCenter);
+
+            TriangleVector2 tv2 = CreateTriangle(&ant->bodyCenter.position, HEIGHT, WIDTH);
+            GenerateFloatArray(&tv2, vectorVertex);
+
+            // Draw Target
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+            // Update buffer data.
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
+
+            tv2 = CreateTriangle(&target, HEIGHT, WIDTH);
             GenerateFloatArray(&tv2, vectorVertex);
 
             glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -181,7 +205,17 @@ GLuint genShaderProgram01() {
 
 void doSimulate(Particle *p) {
 //    Vector2 acceleration = ComputeGravityForce(p);
-    CalculateNewPositionAndVelocity(p, &currentXlr8, &context);
+    Vector2 accToTarget = GetAccelerationToTarget(p, &target, &context);
+    CalculateNewPositionAndVelocity(p, &accToTarget, &context);
 
 //    CalculateNewPosition(p, &context);
+}
+
+void randomizeTarget() {
+    unsigned int x = (unsigned int) random();
+    unsigned int y = (unsigned int) random();
+    x = x % 800;
+    y = y % 800;
+
+    target = (Vector2) {(float) x, (float) y};
 }

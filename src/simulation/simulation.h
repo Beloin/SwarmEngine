@@ -6,11 +6,15 @@
 #define SWARM_ENGINE_SIMULATION_H
 
 #include "../../include/physics/particle.h"
+#include "../../include/physics/ant.h"
 
-#define P_SIZE 20
+#define DEFAULT_CENTER_DIST 50.0f
+#define S_LENGTH 20
 
-void Initialize(int pmin, int pmax);
-Particle* GetParticleArray();
-int GetParticlesLength();
+void InitializeSimulation(int pmin, int pmax);
+
+Ant *GetSimulationArray();
+
+int GetSimulationLength();
 
 #endif //SWARM_ENGINE_SIMULATION_H
