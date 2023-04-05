@@ -125,8 +125,6 @@ int main() {
         for (int i = 0; i < GetSimulationLength(); ++i) {
             Ant *ant = ptr + i;
 
-            ant->bodyCenter.dt += seconds;
-
             doSimulate(&ant->bodyCenter);
 
             TriangleVector2 tv2 = CreateTriangle(&ant->bodyCenter.position, HEIGHT, WIDTH);

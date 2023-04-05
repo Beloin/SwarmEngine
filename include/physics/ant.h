@@ -13,13 +13,14 @@
 
 typedef struct {
     Particle bodyCenter;
-    AABB aabb;
+    AABB aabb; // TODO: Could use a circle instead of AABB, since is radius and the formula is simple.
     float attraction;
 } Ant;
 
 // TODO: Here we will implement the real part where we will be using attraction
 
 void TestAttraction(Ant *ants, int size);
+Ant CreateAnt();
 
 
 

@@ -53,7 +53,8 @@ Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target, PhysicsCont
     float numeratorY = yTargetDistance - velocity.y * time;
     float accY = numeratorY / (time * time);
 
-    if (fabsf(xTargetDistance) < 0.01 && fabsf(yTargetDistance) < 0.01) {
+    // TODO: Find a better way to implement it
+    if (fabsf(accX) < 0.0000000001 && fabsf(accY) < 0.00000000001) {
         physicsContext->reset = physicsContext->t;
     }
 

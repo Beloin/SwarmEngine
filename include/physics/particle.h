@@ -13,8 +13,7 @@
 typedef struct {
     Vector2 position;
     Vector2 velocity;
-    float mass;
-    double dt; // TODO: Here we have 4 padding bytes, since we have 8 padded byes
+    float mass; // TODO: How many padding bytes we have?
 } Particle;
 
 Vector2 ComputeGravityForce(Particle *particle);
