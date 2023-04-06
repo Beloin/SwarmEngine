@@ -5,11 +5,11 @@
 #ifndef SWARM_ENGINE_SIMULATION_H
 #define SWARM_ENGINE_SIMULATION_H
 
-#include "../../include/physics/particle.h"
-#include "../../include/physics/ant.h"
+#include "particle.h"
+#include "ant/ant.h"
 
 #define DEFAULT_CENTER_DIST 50.0f
-#define S_LENGTH 20
+#define S_LENGTH 1
 
 void InitializeSimulation(int pmin, int pmax);
 

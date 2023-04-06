@@ -9,7 +9,7 @@ bool AABBvsAABB(AABB *a, AABB *b) {
         return false;
     }
 
-    if (a->max.y < b->min.y || a->min.y < b->max.y) {
+    if (a->max.y < b->min.y || a->min.y > b->max.y) {
         return false;
     }
 

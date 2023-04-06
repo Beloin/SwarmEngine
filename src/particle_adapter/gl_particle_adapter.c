@@ -10,6 +10,7 @@ const float h = ((float) 3 / 2) * DEFAULT_CENTER_DIST;
 
 float normalize(float value, int min, int max);
 
+// TODO: Bug, when Height is different then width, we have a weird triangle
 TriangleVector2 CreateTriangle(Vector2 *particle, int height, int width) {
     //  Manual Example:
     //  Test with R = 50

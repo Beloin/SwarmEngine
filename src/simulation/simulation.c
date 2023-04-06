@@ -16,40 +16,13 @@ Ant *GetSimulationArray() {
     return &ants[0];
 }
 
-#if 0
-
-void Initialize(int pmin, int pmax) {
-    if (isInitialized) return;
-
-    isInitialized = 1;
-    for (int i = 0; i < S_LENGTH; ++i) {
-        unsigned int x = (unsigned int) random();
-        unsigned int y = (unsigned int) random();
-        x = x % pmax;
-        y = y % pmax;
-
-        if (x < pmin) x = pmin;
-        if (y < pmin) y = pmin;
-
-        Particle pTemp = (Particle) {(Vector2) {(float) x, (float) y}, (Vector2) {0, 0}, 1};
-
-        Vector2 min = (Vector2) {pTemp.position.x - DEFAULT_CENTER_DIST, pTemp.position.y - DEFAULT_CENTER_DIST};
-        Vector2 max = (Vector2) {pTemp.position.x + DEFAULT_CENTER_DIST, pTemp.position.y + DEFAULT_CENTER_DIST};
-        AABB aabb = (AABB) {min, max};
-        ants[i] = (Ant) {pTemp, aabb, ATTRACTION_THRESHOLD};
-    }
-
-}
-
-#else
-
 void InitializeSimulation(int pmin, int pmax) {
     if (isInitialized) return;
 
     isInitialized = 1;
 
     float aspect = 0.3f;
-    for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < S_LENGTH; ++i) {
         unsigned int rx = (unsigned int) random();
         unsigned int ry = (unsigned int) random();
         rx = rx % pmax;
@@ -60,20 +33,14 @@ void InitializeSimulation(int pmin, int pmax) {
 
 
         float x = 100.f + (float) rx * aspect;
-        float y = 100.f + (float) ry * aspect;
+        float y = 400 + (float) ry * aspect;
 
-
-        Particle pTemp = (Particle) {(Vector2) {(float) x, (float) y}, (Vector2) {0, 0}, 1};
-
-        Vector2 min = (Vector2) {pTemp.position.x - DEFAULT_CENTER_DIST, pTemp.position.y - DEFAULT_CENTER_DIST};
-        Vector2 max = (Vector2) {pTemp.position.x + DEFAULT_CENTER_DIST, pTemp.position.y + DEFAULT_CENTER_DIST};
-        AABB aabb = (AABB) {min, max};
-        ants[i] = (Ant) {pTemp, aabb, ATTRACTION_THRESHOLD};
+        Particle pTemp = (Particle) {(Vector2) {(float) x, (float) y}, (Vector2) {2, 0}, 1, {0, 0}};
+        ants[i] = (Ant) {pTemp, START_ATTRACTION};
     }
 
 }
 
-#endif
 
 
 

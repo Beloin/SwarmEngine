@@ -5,7 +5,7 @@
 #ifndef SWARM_ENGINE_GL_PARTICLE_ADAPTER_H
 #define SWARM_ENGINE_GL_PARTICLE_ADAPTER_H
 
-#include "../../include/physics/vector2.h"
+#include "vector2.h"
 
 
 // For now everyone will be an equilateral triangle.

@@ -8,8 +8,8 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 
-#define HEIGHT 800
-#define WIDTH 800
+#define HEIGHT 1200
+#define WIDTH 1200
 
 
 char fps;
@@ -53,6 +53,8 @@ void doSimulate(Particle *p);
 
 
 Vector2 target = (Vector2) {700, 100};
+Ant swarmedAnts[100];
+int swarmedAntsLength = 0;
 
 void randomizeTarget();
 
@@ -88,6 +90,9 @@ int main() {
 
 
     InitializeSimulation(0, HEIGHT);
+    // Ant 01
+    swarmedAnts[swarmedAntsLength] = CreateAnt(300, 400);
+    swarmedAntsLength++;
 
     GLuint shaderProgram01 = genShaderProgram01();
 
@@ -125,6 +130,7 @@ int main() {
         for (int i = 0; i < GetSimulationLength(); ++i) {
             Ant *ant = ptr + i;
 
+            ant->bodyCenter.context.t = currentTime;
             doSimulate(&ant->bodyCenter);
 
             TriangleVector2 tv2 = CreateTriangle(&ant->bodyCenter.position, HEIGHT, WIDTH);
@@ -135,9 +141,25 @@ int main() {
             // Update buffer data.
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
 
-            tv2 = CreateTriangle(&target, HEIGHT, WIDTH);
+            // Draw fiction Target
+//            tv2 = CreateTriangle(&target, HEIGHT, WIDTH);
+//            GenerateFloatArray(&tv2, vectorVertex);
+//
+//            glDrawArrays(GL_TRIANGLES, 0, 3);
+//            // Update buffer data.
+//            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
+        }
+
+        for (int i = 0; i < swarmedAntsLength; ++i) {
+            Ant *ant = &swarmedAnts[i];
+            ant->bodyCenter.context.t = currentTime;
+
+            SimulateAnt(ant, ptr, GetSimulationLength());
+
+            TriangleVector2 tv2 = CreateTriangle(&ant->bodyCenter.position, HEIGHT, WIDTH);
             GenerateFloatArray(&tv2, vectorVertex);
 
+            // Draw Target
             glDrawArrays(GL_TRIANGLES, 0, 3);
             // Update buffer data.
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
@@ -203,10 +225,19 @@ GLuint genShaderProgram01() {
 
 void doSimulate(Particle *p) {
 //    Vector2 acceleration = ComputeGravityForce(p);
-    Vector2 accToTarget = GetAccelerationToTarget(p, &target, &context);
-    CalculateNewPositionAndVelocity(p, &accToTarget, &context);
+//    Vector2 accToTarget = GetAccelerationToTarget(p, &target, &context);
+//    CalculateNewPositionAndVelocity(p, &accToTarget, &context);
 
-//    CalculateNewPosition(p, &context);
+//    SimulateAnts();
+
+    if (p->position.x > WIDTH + 50) {
+        p->position.x = 0;
+//        p->position.y -= 50;
+
+        p->context.reset = p->context.t - 1;
+    }
+    CalculateNewPosition(p);
+
 }
 
 void randomizeTarget() {

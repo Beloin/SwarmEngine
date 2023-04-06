@@ -1,9 +1,7 @@
-#include <stdlib.h>
 #include "vector2.h"
 #include "particle.h"
 
 #define TIME_TO_TARGET 200
-#define DEFAULT_ACC .5f
 
 #include "math.h"
 
@@ -11,9 +9,9 @@ Vector2 ComputeGravityForce(Particle *particle) {
     return (Vector2) {0, -particle->mass * GRAVITY};
 }
 
-void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration, const PhysicsContext *context) {
+void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration) {
     Vector2 *velocity = &particle->velocity;
-    float dt = (float) (context->t - context->reset);
+    float dt = (float) (particle->context.t - particle->context.reset);
 
     velocity->x = velocity->x + acceleration->x * dt;
     velocity->y = velocity->y + acceleration->y * dt;
@@ -23,8 +21,8 @@ void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration, 
     position->y = position->y + velocity->y * dt;
 }
 
-void CalculateNewPosition(Particle *particle, const PhysicsContext *context) {
-    float dt = (float) context->t;
+void CalculateNewPosition(Particle *particle) {
+    float dt = (float) (particle->context.t - particle->context.reset);
 
     Vector2 *velocity = &particle->velocity;
     Vector2 *position = &particle->position;
@@ -32,15 +30,14 @@ void CalculateNewPosition(Particle *particle, const PhysicsContext *context) {
     position->y = position->y + velocity->y * dt;
 }
 
-
 Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target, PhysicsContext *physicsContext) {
     // S = S0 + (V0 + a*t/2)*t
     Vector2 particlePosition = particle->position;
     Vector2 velocity = particle->velocity;
 
-    float baseLine = (float) (physicsContext->t - physicsContext->reset);
 
     float time = TIME_TO_TARGET;
+//    float baseLine = (float) (physicsContext->t - physicsContext->reset);
 //    float time = TIME_TO_TARGET + baseLine * (1 - exp(-baseLine/10));
 //    float time = TIME_TO_TARGET + physicsContext->t * (4 - exp(-physicsContext->t));
 
@@ -54,8 +51,9 @@ Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target, PhysicsCont
     float accY = numeratorY / (time * time);
 
     // TODO: Find a better way to implement it
+    // TODO: Put this inside Simulation.
     if (fabsf(accX) < 0.0000000001 && fabsf(accY) < 0.00000000001) {
-        physicsContext->reset = physicsContext->t;
+        particle->context.reset = particle->context.t;
     }
 
     return (Vector2) {accX * 2, accY * 2};
