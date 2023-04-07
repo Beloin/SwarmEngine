@@ -32,7 +32,7 @@ To show some interface we are using OpenGL with GLFW and GLAD framework to manag
 
 In our simulation, we will only use a [Boids-like simulation](https://en.wikipedia.org/wiki/Boids),
 comparing by the proximity of the organisms. We have a swarm moving on its way
-and a single organism stopped. When the Swarm pass close by the Organism, they are attracted to the swarm,
+and a single organism stopped. Each organism has its "attraction force". When the Swarm pass close by the Organism, they are attracted to the swarm,
 moving closely to swarm without knowing where they are going.
 
 ## One Organism Attraction Example
@@ -41,7 +41,7 @@ moving closely to swarm without knowing where they are going.
 
 ## Multiple Organism Attraction Example
 
-Here we calculate the Centroid of all the points in order to keep track to where to go.
+If the attraction threshold is surpassed, we calculate the Centroid of all the points. So we can keep track to where to go.
 
 <img src="resources/multiple-unit-example2.gif" alt="Multiple Organism Attraction">
 
