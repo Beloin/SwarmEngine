@@ -30,9 +30,10 @@ Programming in C, we are using a simple 2D Physics simulator to act as our engin
 To show some interface we are using OpenGL with GLFW and GLAD framework to manage our pointers and startup.
 
 
-In our simulation, we will only use a Boids-like simulation of the Swarm process. We have a swarm moving on its way
-and a single organism stopped. When the Swarm pass close by the Organism, they are attracted to the swarm, moving closely to
-swarm without knowing where they are going.
+In our simulation, we will only use a [Boids-like simulation](https://en.wikipedia.org/wiki/Boids),
+comparing by the proximity of the organisms. We have a swarm moving on its way
+and a single organism stopped. When the Swarm pass close by the Organism, they are attracted to the swarm,
+moving closely to swarm without knowing where they are going.
 
 ## One Organism Attraction Example
 
