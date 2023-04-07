@@ -9,7 +9,7 @@
 #include "ant/ant.h"
 
 #define DEFAULT_CENTER_DIST 50.0f
-#define S_LENGTH 1
+#define S_LENGTH 20
 
 void InitializeSimulation(int pmin, int pmax);
 

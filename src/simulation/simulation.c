@@ -35,7 +35,7 @@ void InitializeSimulation(int pmin, int pmax) {
         float x = 100.f + (float) rx * aspect;
         float y = 400 + (float) ry * aspect;
 
-        Particle pTemp = (Particle) {(Vector2) {(float) x, (float) y}, (Vector2) {2, 0}, 1, {0, 0}};
+        Particle pTemp = (Particle) {(Vector2) {(float) x, (float) y}, (Vector2) {.5f, 0}, 1, {0, 0}};
         ants[i] = (Ant) {pTemp, START_ATTRACTION};
     }
 

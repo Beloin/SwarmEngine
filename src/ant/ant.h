@@ -10,7 +10,8 @@
 #include "aabb.h"
 
 #define START_ATTRACTION 10
-#define ATTRACTION_THRESHOLD 0
+// This needs to be at least 1.
+#define ATTRACTION_THRESHOLD 1
 
 typedef struct {
     Particle bodyCenter;

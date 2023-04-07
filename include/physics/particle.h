@@ -23,6 +23,6 @@ void CalculateNewPositionAndVelocity(Particle *particle, Vector2 *acceleration);
 
 void CalculateNewPosition(Particle *particle);
 
-Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target, PhysicsContext *ptr);
+Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target);
 
 #endif //INC_2D_PHYSICS_PARTICLE_H

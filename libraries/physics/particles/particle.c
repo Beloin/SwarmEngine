@@ -30,17 +30,12 @@ void CalculateNewPosition(Particle *particle) {
     position->y = position->y + velocity->y * dt;
 }
 
-Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target, PhysicsContext *physicsContext) {
+Vector2 GetAccelerationToTarget(Particle *particle, Vector2 *target) {
     // S = S0 + (V0 + a*t/2)*t
     Vector2 particlePosition = particle->position;
     Vector2 velocity = particle->velocity;
 
-
     float time = TIME_TO_TARGET;
-//    float baseLine = (float) (physicsContext->t - physicsContext->reset);
-//    float time = TIME_TO_TARGET + baseLine * (1 - exp(-baseLine/10));
-//    float time = TIME_TO_TARGET + physicsContext->t * (4 - exp(-physicsContext->t));
-
 
     float xTargetDistance = target->x - particlePosition.x;
     float numeratorX = xTargetDistance - velocity.x * time;

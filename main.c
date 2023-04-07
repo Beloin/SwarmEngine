@@ -140,14 +140,6 @@ int main() {
             glDrawArrays(GL_TRIANGLES, 0, 3);
             // Update buffer data.
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
-
-            // Draw fiction Target
-//            tv2 = CreateTriangle(&target, HEIGHT, WIDTH);
-//            GenerateFloatArray(&tv2, vectorVertex);
-//
-//            glDrawArrays(GL_TRIANGLES, 0, 3);
-//            // Update buffer data.
-//            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vectorVertex), vectorVertex);
         }
 
         for (int i = 0; i < swarmedAntsLength; ++i) {
@@ -224,16 +216,11 @@ GLuint genShaderProgram01() {
 }
 
 void doSimulate(Particle *p) {
-//    Vector2 acceleration = ComputeGravityForce(p);
-//    Vector2 accToTarget = GetAccelerationToTarget(p, &target, &context);
-//    CalculateNewPositionAndVelocity(p, &accToTarget, &context);
-
-//    SimulateAnts();
+//    Vector2 accToTarget = GetAccelerationToTarget(p, &target);
+//    CalculateNewPositionAndVelocity(p, &accToTarget);
 
     if (p->position.x > WIDTH + 50) {
         p->position.x = 0;
-//        p->position.y -= 50;
-
         p->context.reset = p->context.t - 1;
     }
     CalculateNewPosition(p);
@@ -243,8 +230,8 @@ void doSimulate(Particle *p) {
 void randomizeTarget() {
     unsigned int x = (unsigned int) random();
     unsigned int y = (unsigned int) random();
-    x = x % 800;
-    y = y % 800;
+    x = x % (WIDTH - 200);
+    y = y % (HEIGHT - 200);
 
     target = (Vector2) {(float) x, (float) y};
 }

@@ -12,40 +12,35 @@ Vector2 getCentroid(Ant **pArr, int length);
 
 void SimulateAnt(Ant *ant, Ant *ants, int size) {
 
-//    int attractedAntsLength = 0;
-//    double attraction = 0;
-//    Ant **attractedAnts = (Ant **) malloc(sizeof(Ant *) * size);
+    int attractedAntsLength = 0;
+    double attraction = 0;
+    Ant **attractedAnts = (Ant **) malloc(sizeof(Ant *) * size);
 
     for (int i = 0; i < size; ++i) {
         Ant *compareAnt = &ants[i];
         // TODO: This gets in a radius independent of the position
         if (checkAABB(ant, compareAnt)) {
-            printf("COLLISION: (%2.f, %2.f) -> (%2.f, %2.f)\n", ant->bodyCenter.position.x, ant->bodyCenter.position.y,
-                   compareAnt->bodyCenter.position.x, compareAnt->bodyCenter.position.y);
-            Vector2 acc = GetAccelerationToTarget(&ant->bodyCenter, &compareAnt->bodyCenter.position, NULL);
-            CalculateNewPositionAndVelocity(&ant->bodyCenter, &acc);
-
-//            attractedAnts[attractedAntsLength] = compareAnt;
-//            attractedAntsLength++;
-//            attraction += compareAnt->attraction;
+            attractedAnts[attractedAntsLength] = compareAnt;
+            attractedAntsLength++;
+            attraction += compareAnt->attraction;
         }
     }
 
-//    if (attraction >= ATTRACTION_THRESHOLD) {
-//        // Calculate the centroid of all the points of the `attractedAnts`
-//        // Set the ant position to there
-//        Vector2 centroid = getCentroid(attractedAnts, attractedAntsLength);
-//        Vector2 acc = GetAccelerationToTarget(&ant->bodyCenter, &centroid, NULL);
-//        CalculateNewPositionAndVelocity(&ant->bodyCenter, &acc);
-//    }
+    if (attraction >= ATTRACTION_THRESHOLD) {
+        // Calculate the centroid of all the points of the `attractedAnts`
+        // Set the ant position to there
+        Vector2 centroid = getCentroid(attractedAnts, attractedAntsLength);
+        Vector2 acc = GetAccelerationToTarget(&ant->bodyCenter, &centroid);
+        CalculateNewPositionAndVelocity(&ant->bodyCenter, &acc);
+    }
 
     // Free the created pointer
-//    free(attractedAnts);
+    free(attractedAnts);
 }
 
 void SimulateAnts(Ant *ants, int size, PhysicsContext *context) {
 
-    // n + (n-1) + (n-2) + (n-3) ... -> O(N²), porém,
+    // n + (n-1) + (n-2) + (n-3) ...
     for (int i = 0; i < size; ++i) {
 
         Ant *currentAnt = &ants[i];
@@ -56,9 +51,7 @@ void SimulateAnts(Ant *ants, int size, PhysicsContext *context) {
 
         for (int j = i; j < size; ++j) {
             Ant *compareAnt = &ants[j];
-            // TODO: This gets in a radius independent of the position
             if (checkAABB(currentAnt, compareAnt)) {
-                // TODO: See this.
                 attractedAnts[attractedAntsLength] = compareAnt;
 
                 attractedAntsLength++;
@@ -71,7 +64,7 @@ void SimulateAnts(Ant *ants, int size, PhysicsContext *context) {
             // Calculate the centroid of all the points of the `attractedAnts`
             // Set the ant position to there
             Vector2 centroid = getCentroid(attractedAnts, attractedAntsLength);
-            Vector2 acc = GetAccelerationToTarget(&currentAnt->bodyCenter, &centroid, context);
+            Vector2 acc = GetAccelerationToTarget(&currentAnt->bodyCenter, &centroid);
             CalculateNewPositionAndVelocity(&currentAnt->bodyCenter, &acc);
         }
 
