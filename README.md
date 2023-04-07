@@ -26,7 +26,7 @@ food sources.
 
 <br>
 
-We are using a simple 2D Physics simulator to act as our engine, as seen in the [2D Physics Example](https://github.com/Beloin/2DPhysicsSimulator).
+Programming in C, we are using a simple 2D Physics simulator to act as our engine, as seen in the [2D Physics Example](https://github.com/Beloin/2DPhysicsSimulator).
 To show some interface we are using OpenGL with GLFW and GLAD framework to manage our pointers and startup.
 
 
