@@ -1,6 +1,6 @@
 # Implementation of a Simple Swarm Engine
 
-Swarm are naturally observed in insects and animals, where the individual activity
+Swarms are naturally observed in insects and animals, where the individual activity
 are suppressed by the group will. 
 
 An example is the Ant Swarm process. Ants use a process of stochastic local decision by two main factors: Pheromone and heuristic.
@@ -14,7 +14,7 @@ advancing, and the Bad Paths are often forgotten and gives less pheromone streng
 
 Other example are the Bee Swarm. Bees are separated in three classes: Employed, Scout Bees and the Onlooker.
 Scout Bees looks for fresh food sources, when found, they mark the source with a fitness quotient. If the employed
-bees find the marked food source with the quotient and the quotient are higher it is marked for further processing.
+bees find the marked food source and the quotient are higher than the last ones, it is marked for further processing.
 The employed bees update its database with newer and better food. Lastly the Onlooker bees filter for the best 
 food sources.
 
@@ -24,6 +24,7 @@ food sources.
 <img src="resources/giphy.gif" alt="Real Life Ant Looking for food">
 </div>
 
+<br>
 
 We are using a simple 2D Physics simulator to act as our engine, as seen in the [2D Physics Example](https://github.com/Beloin/2DPhysicsSimulator).
 To show some interface we are using OpenGL with GLFW and GLAD framework to manage our pointers and startup.
@@ -39,7 +40,18 @@ swarm without knowing where they are going.
 
 ## Multiple Organism Attraction Example
 
+Here we calculate the Centroid of all the points in order to keep track to where to go.
+
 <img src="resources/multiple-unit-example2.gif" alt="Multiple Organism Attraction">
+
+To show more on another Axis:
+
+<img src="resources/multiple-axisy.gif" alt="Multiple Organism Attraction in Y Axis">
+
+And, of course, if the Swarm is not close enough, the organism will not move:
+
+<img src="resources/multiple-axisy-dont-t.gif" alt="Multiple Organism Attraction in Y Axis">
+
 
 ## References
 
@@ -47,7 +59,7 @@ swarm without knowing where they are going.
 - Chakraborty, A., Kar, A.K. (2017). Swarm Intelligence: A Review of Algorithms. In: Patnaik, S., Yang, XS., Nakamatsu, K. (eds) Nature-Inspired Computing and Optimization. Modeling and Optimization in Science and Technologies, vol 10. Springer, Cham. https://doi.org/10.1007/978-3-319-50920-4_19
 - [Boids](https://en.wikipedia.org/wiki/Boids), Wikipedia.
 
-<style hidden>
+<style>
 .parent{
     display: flex;
     grid-template-columns: 1fr 1fr 1fr;

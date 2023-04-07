@@ -219,10 +219,16 @@ void doSimulate(Particle *p) {
 //    Vector2 accToTarget = GetAccelerationToTarget(p, &target);
 //    CalculateNewPositionAndVelocity(p, &accToTarget);
 
-    if (p->position.x > WIDTH + 50) {
-        p->position.x = 0;
+//    if (p->position.x > WIDTH + 50) {
+//        p->position.x = 0;
+//        p->context.reset = p->context.t - 1;
+//    }
+
+    if (p->position.y > HEIGHT + 50) {
+        p->position.y = 0;
         p->context.reset = p->context.t - 1;
     }
+
     CalculateNewPosition(p);
 
 }
