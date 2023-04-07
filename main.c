@@ -91,7 +91,41 @@ int main() {
 
     InitializeSimulation(0, HEIGHT);
     // Ant 01
-    swarmedAnts[swarmedAntsLength] = CreateAnt(300, 400);
+    swarmedAnts[swarmedAntsLength] = CreateAnt(850, 500);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(300, 800);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(100, 900);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(600, 900);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(100, 900);
+    swarmedAntsLength++;
+
+    swarmedAnts[swarmedAntsLength] = CreateAnt(50, 600);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(600, 200);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(236, 200);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(02, 200);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(500, 100);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(800, 100);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(750, 500);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(800, 850);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(1000, 850);
+    swarmedAntsLength++;
+
+    swarmedAnts[swarmedAntsLength] = CreateAnt(1100, 500);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(1100, 650);
+    swarmedAntsLength++;
+    swarmedAnts[swarmedAntsLength] = CreateAnt(1100, 490);
     swarmedAntsLength++;
 
     GLuint shaderProgram01 = genShaderProgram01();
@@ -226,6 +260,7 @@ void doSimulate(Particle *p) {
 
     if (p->position.y > HEIGHT + 50) {
         p->position.y = 0;
+        p->position.x = 0;
         p->context.reset = p->context.t - 1;
     }
 

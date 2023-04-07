@@ -47,11 +47,15 @@ Here we calculate the Centroid of all the points in order to keep track to where
 To show more on another Axis:
 
 <img src="resources/multiple-axisy.gif" alt="Multiple Organism Attraction in Y Axis">
+<img src="resources/diagonal--swarm.gif" alt="Multiple Organism Attraction in diagonal Axis">
 
-And, of course, if the Swarm is not close enough, the organism will not move:
+And, of course, if the Swarm is not close enough, the organism will not move at all:
 
 <img src="resources/multiple-axisy-dont-t.gif" alt="Multiple Organism Attraction in Y Axis">
 
+## Multiple Organisms to be Attracted
+
+<img src="resources/multiple-swarm-multiple.gif" alt="Multiple x Multiple">
 
 ## References
 

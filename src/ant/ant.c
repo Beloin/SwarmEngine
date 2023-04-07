@@ -90,7 +90,7 @@ AABB GetAABBFromAnt(Ant *ant, float AABBSize) {
 
 
 bool checkAABB(Ant *a, Ant *b) {
-    float size = 150.f;
+    float size = 100.f;
     AABB aabb1 = GetAABBFromAnt(a, size);
     AABB aabb2 = GetAABBFromAnt(b, size);
     return AABBvsAABB(&aabb1, &aabb2);

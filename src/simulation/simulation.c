@@ -32,10 +32,10 @@ void InitializeSimulation(int pmin, int pmax) {
         if (ry < pmin) ry = pmin;
 
 
-        float x = 550.f + (float) rx * aspect;
-        float y = 0 + (float) ry * aspect;
+        float x = 0.f + (float) rx * aspect;
+        float y = 0.f + (float) ry * aspect;
 
-        Particle pTemp = (Particle) {(Vector2) {(float) x, (float) y}, (Vector2) {0, .5f}, 1, {0, 0}};
+        Particle pTemp = (Particle) {(Vector2) {(float) x, (float) y}, (Vector2) {.5, .5f}, 1, {0, 0}};
         ants[i] = (Ant) {pTemp, START_ATTRACTION};
     }
 
