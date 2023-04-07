@@ -47,8 +47,7 @@ swarm without knowing where they are going.
 - Chakraborty, A., Kar, A.K. (2017). Swarm Intelligence: A Review of Algorithms. In: Patnaik, S., Yang, XS., Nakamatsu, K. (eds) Nature-Inspired Computing and Optimization. Modeling and Optimization in Science and Technologies, vol 10. Springer, Cham. https://doi.org/10.1007/978-3-319-50920-4_19
 - [Boids](https://en.wikipedia.org/wiki/Boids), Wikipedia.
 
-
-<style>
+<style hidden>
 .parent{
     display: flex;
     grid-template-columns: 1fr 1fr 1fr;
